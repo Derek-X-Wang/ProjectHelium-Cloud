@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+        "rootDir" : "./src/app/",
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "es5",
+        "jsx": "react"
+  },
+  "types": [
+    "core-js",
+    "node",
+    "react",
+    "react-dom",
+    "source-map"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
