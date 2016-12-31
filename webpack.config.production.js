@@ -2,22 +2,20 @@
 
 var path = require('path');
 var webpack = require('webpack');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    devtool: 'source-map',
     entry: [
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-      path.join(__dirname, '/src/app/index')
+      path.join(__dirname, 'src/app/index')
     ],
     output: {
-        path: path.join(__dirname, 'dist/static/'),
-        filename: 'bundle.js',
-        publicPath: 'http://localhost:3000/static/'
+      path: path.join(__dirname, '/dist/static/'),
+      filename: 'bundle.js',
+      publicPath: '/'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(["dist/static"]),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')
