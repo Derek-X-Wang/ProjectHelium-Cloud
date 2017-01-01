@@ -11,7 +11,7 @@ module.exports = {
       path.join(__dirname, '/src/app/index')
     ],
     output: {
-        path: path.join(__dirname, 'dist/static/'),
+        path: path.join(__dirname, 'dist/app/static/'),
         filename: 'bundle.js',
         publicPath: 'http://localhost:3000/static/'
     },

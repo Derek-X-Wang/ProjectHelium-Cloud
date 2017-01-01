@@ -9,13 +9,13 @@ module.exports = {
       path.join(__dirname, 'src/app/index')
     ],
     output: {
-      path: path.join(__dirname, '/dist/static/'),
+      path: path.join(__dirname, '/dist/app/static/'),
       filename: 'bundle.js',
       publicPath: '/'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
-        new CleanWebpackPlugin(["dist/static"]),
+        new CleanWebpackPlugin(["dist/app/static"]),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')

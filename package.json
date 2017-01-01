@@ -4,7 +4,7 @@
   "description": "Cloud Service for ProjectHelium",
   "main": "index.js",
   "scripts": {
-    "start": "node dev-server.js",
+    "start": "webpack && node dev-server.js",
     "koa": "tsc && webpack --config ./webpack.config.production.js &&node --harmony-async-await ./dist/server/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
     "@types/node": "^6.0.54",
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
+    "@types/react-redux": "^4.4.35",
     "@types/source-map": "^0.5.0",
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "clean-webpack-plugin": "^0.1.14",
