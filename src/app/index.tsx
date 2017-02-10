@@ -1,22 +1,14 @@
-// import * as React from "react";
-// import * as ReactDOM from "react-dom";
-// import App from "./App";
-//
-// const rootEl = document.getElementById("app");
-// ReactDOM.render(
-//     <App />,
-//     rootEl
-// );
-
-
 import * as React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
+import { Store, createStore } from 'redux'
 import { Provider } from 'react-redux'
 import App from './containers/App'
-import todoApp from './reducers'
+import rootReducer from './reducers'
+import { Todo } from './model'
 
-let store = createStore(todoApp)
+const initialState = {};
+
+const store = createStore(rootReducer, initialState);
 
 let rootElement = document.getElementById('app')
 render(

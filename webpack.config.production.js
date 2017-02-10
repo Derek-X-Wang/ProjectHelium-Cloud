@@ -3,6 +3,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: [
@@ -19,7 +20,11 @@ module.exports = {
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')
-        })
+        }),
+        new CopyWebpackPlugin([
+            { from: './src/app/css/main.css', to: './css/' },
+            { from: './src/app/css/todos.css', to: './css/' }
+          ])
     ],
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.

@@ -1,33 +1,50 @@
-/*
- * action 类型
- */
+import { createAction, Action } from 'redux-actions';
+import { assign } from 'lodash';
+
+import { Todo } from './model';
 
 export const ADD_TODO = 'ADD_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
+export const EDIT_TODO = 'EDIT_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+export const COMPLETE_ALL = 'COMPLETE_ALL';
+export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
 
-/*
- * 其它的常量
- */
+const addTodo = createAction(
+  ADD_TODO,
+  (text: string) => ({ text, completed: false })
+);
 
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
-};
+const deleteTodo = createAction(
+  DELETE_TODO,
+  (todo: Todo) => todo
+);
 
-/*
- * action 创建函数
- */
+const editTodo = createAction(
+  EDIT_TODO,
+  (todo: Todo, newText: string) => <Todo>assign(todo, {text: newText})
+);
 
-export function addTodo(text:string) {
-  return { type: ADD_TODO, text }
-}
+const completeTodo = createAction(
+  COMPLETE_TODO,
+  (todo: Todo) => todo
+)
 
-export function completeTodo(index:number) {
-  return { type: COMPLETE_TODO, index }
-}
+const completeAll = createAction(
+  COMPLETE_ALL,
+  () => {}
+)
 
-export function setVisibilityFilter(filter:any) {
-  return { type: SET_VISIBILITY_FILTER, filter }
+const clearCompleted = createAction(
+  CLEAR_COMPLETED,
+  () => {}
+);
+
+export {
+  addTodo,
+  deleteTodo,
+  editTodo,
+  completeTodo,
+  completeAll,
+  clearCompleted
 }

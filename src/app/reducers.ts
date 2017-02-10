@@ -1,42 +1,68 @@
-import { combineReducers } from 'redux'
-import { ADD_TODO, COMPLETE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from './actions'
-const { SHOW_ALL } = VisibilityFilters
+import { assign } from 'lodash';
+import { handleActions, Action } from 'redux-actions';
+import { combineReducers } from 'redux';
 
-function visibilityFilter(state:any = SHOW_ALL, action:any) {
-  switch (action.type) {
-    case SET_VISIBILITY_FILTER:
-      return action.filter
-    default:
-      return state
+import { Todo, IState } from './model';
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  EDIT_TODO,
+  COMPLETE_TODO,
+  COMPLETE_ALL,
+  CLEAR_COMPLETED
+} from './actions';
+
+const initialState: IState = [<Todo>{
+  text: 'Server Up',
+  completed: true,
+  id: 0
+}];
+
+const todos = handleActions<IState>({
+  [ADD_TODO]: (state: IState, action: Action<Todo>): IState => {
+    return [{
+      id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+      completed: action.payload.completed,
+      text: action.payload.text
+    }, ...state];
+  },
+
+  [DELETE_TODO]: (state: IState, action: Action<Todo>): IState => {
+    return state.filter(todo =>
+      todo.id !== action.payload.id
+    );
+  },
+
+  [EDIT_TODO]: (state: IState, action: Action<Todo>): IState => {
+    return <IState>state.map(todo =>
+      todo.id === action.payload.id
+        ? assign(<Todo>{}, todo, { text: action.payload.text })
+        : todo
+    );
+  },
+
+  [COMPLETE_TODO]: (state: IState, action: Action<Todo>): IState => {
+    return <IState>state.map(todo =>
+      todo.id === action.payload.id ?
+        assign({}, todo, { completed: !todo.completed }) :
+        todo
+    );
+  },
+
+  [COMPLETE_ALL]: (state: IState, action: Action<Todo>): IState => {
+    const areAllMarked = state.every(todo => todo.completed);
+    return <IState>state.map(todo => assign({}, todo, {
+      completed: !areAllMarked
+    }));
+  },
+
+  [CLEAR_COMPLETED]: (state: IState, action: Action<Todo>): IState => {
+    return state.filter(todo => todo.completed === false);
   }
-}
+}, initialState);
 
-function todos(state:any = [], action:any) {
-  switch (action.type) {
-    case ADD_TODO:
-      return [
-        ...state,
-        {
-          text: action.text,
-          completed: false
-        }
-      ]
-    case COMPLETE_TODO:
-      return [
-        ...state.slice(0, action.index),
-        Object.assign({}, state[action.index], {
-          completed: true
-        }),
-        ...state.slice(action.index + 1)
-      ]
-    default:
-      return state
-  }
-}
-
-const todoApp = combineReducers({
-  visibilityFilter,
+const rootReducer = combineReducers({
   todos
-})
+});
 
-export default todoApp
+export default rootReducer;
