@@ -9,14 +9,14 @@ import * as http from 'http';
 import router from './routes';
 
 const app = new Koa();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5050;
 
 app.use(bodyParser())
    .use(serve("."))
    .use(router.routes())
    .use(router.allowedMethods());
 
-var server = http.createServer(app.callback()).listen(3000);
+var server = http.createServer(app.callback()).listen(port);
 export var io = socketIO(server);
 
 io.on('connection', function(socket){
@@ -27,6 +27,6 @@ io.on('connection', function(socket){
   });
 });
 
-server.listen(port, () => console.log(chalk.black.bgGreen.bold(`Listening on port ${port}`)));
+//server.listen(port, () => console.log(chalk.black.bgGreen.bold(`Listening on port? ${port}`)));
 
 export default app;
