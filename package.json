@@ -11,6 +11,10 @@
   "keywords": [
     "cloud"
   ],
+  "engines": {
+    "node": "7.3.0",
+    "npm": "3.10.10"
+  },
   "author": "Derek-X-Wang",
   "license": "ISC",
   "devDependencies": {
