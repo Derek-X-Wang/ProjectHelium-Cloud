@@ -1,6 +1,6 @@
 {
   "name": "ehe",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Cloud Service for ProjectHelium",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "@types/koa-send": "^3.3.0",
     "@types/koa-static": "^2.0.22",
     "@types/lodash": "^4.14.52",
+    "@types/mqtt": "0.0.33",
     "@types/node": "^6.0.54",
     "@types/react": "^0.14.55",
     "@types/react-dom": "^0.14.19",
@@ -56,6 +57,7 @@
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.0",
     "lodash": "^4.17.4",
+    "mqtt": "^2.4.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^5.0.1",

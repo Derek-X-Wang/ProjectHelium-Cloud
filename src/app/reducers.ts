@@ -9,7 +9,8 @@ import {
   EDIT_TODO,
   COMPLETE_TODO,
   COMPLETE_ALL,
-  CLEAR_COMPLETED
+  CLEAR_COMPLETED,
+  COMPLETE_TASK
 } from './actions';
 
 const initialState: IState = [<Todo>{
@@ -46,6 +47,16 @@ const todos = handleActions<IState>({
       todo.id === action.payload.id ?
         assign({}, todo, { completed: !todo.completed }) :
         todo
+    );
+  },
+
+  [COMPLETE_TASK]: (state: IState, action: Action<Todo>): IState => {
+    return <IState>state.map(todo => {
+      return todo.text === action.payload.text ?
+        assign({}, todo, { completed: !todo.completed }) :
+        todo
+    }
+
     );
   },
 

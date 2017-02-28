@@ -9,6 +9,7 @@ export const EDIT_TODO = 'EDIT_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const COMPLETE_ALL = 'COMPLETE_ALL';
 export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
+export const COMPLETE_TASK = 'COMPLETE_TASK';
 
 const addTodo = createAction(
   ADD_TODO,
@@ -28,12 +29,17 @@ const editTodo = createAction(
 const completeTodo = createAction(
   COMPLETE_TODO,
   (todo: Todo) => todo
-)
+);
+
+const completeTask = createAction(
+  COMPLETE_TASK,
+  (text: string) => ({ text, completed: true })
+);
 
 const completeAll = createAction(
   COMPLETE_ALL,
   () => {}
-)
+);
 
 const clearCompleted = createAction(
   CLEAR_COMPLETED,
@@ -46,5 +52,6 @@ export {
   editTodo,
   completeTodo,
   completeAll,
-  clearCompleted
+  clearCompleted,
+  completeTask
 }
