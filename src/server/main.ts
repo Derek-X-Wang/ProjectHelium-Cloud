@@ -30,7 +30,7 @@ io.on('connection', function(socket){
 });
 
 // MQTT setup
-var mqttUrl = url.parse(process.env.CLOUDmqttUrl || 'mqtt://localhost:1883');
+var mqttUrl = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
 console.log("MQTT: "+url.format(mqttUrl));
 var auth = (mqttUrl.auth || ':').split(':');
 export var mqttClient = mqtt.connect(url.format(mqttUrl));
