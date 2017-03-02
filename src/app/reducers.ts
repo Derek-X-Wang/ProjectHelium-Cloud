@@ -52,9 +52,12 @@ const todos = handleActions<IState>({
 
   [COMPLETE_TASK]: (state: IState, action: Action<Todo>): IState => {
     return <IState>state.map(todo => {
-      return todo.text === action.payload.text ?
-        assign({}, todo, { completed: !todo.completed }) :
-        todo
+      // toggle incompleted task that match text
+      if (!todo.completed && todo.text === action.payload.text) {
+        return assign({}, todo, { completed: !todo.completed });
+      } else {
+        return todo;
+      }
     }
 
     );
