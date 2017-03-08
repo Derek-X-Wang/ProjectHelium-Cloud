@@ -19,8 +19,9 @@ app.use(bodyParser())
    .use(router.allowedMethods());
 
 var server = http.createServer(app.callback()).listen(port);
-export var io = socketIO(server);
 
+// SocketIO setup
+export var io = socketIO(server);
 io.on('connection', function(socket){
   console.log("Connected io");
   socket.emit('news', { hello: 'world' });
@@ -43,7 +44,6 @@ mqttClient.on('message', function (topic:string, message:ArrayBuffer) {
   var msg = String.fromCharCode.apply("", new Uint16Array(message));
   // cut off the '/0' in the end
   msg = msg.substring(0, msg.length - 1);
-
   console.log(`${topic}:${msg}`);
   switch (topic) {
     case 'action_feedback':
@@ -53,7 +53,5 @@ mqttClient.on('message', function (topic:string, message:ArrayBuffer) {
       break;
   }
 });
-
-//server.listen(port, () => console.log(chalk.black.bgGreen.bold(`Listening on port? ${port}`)));
 
 export default app;

@@ -2,56 +2,62 @@ import * as Router from 'koa-router';
 import {Request} from 'koa';
 import * as chalk from 'chalk';
 import * as send from 'koa-send';
-import * as net from 'net';
 
 const router = new Router();
 
 import {io, mqttClient} from './main';
 
+enum Action {
+    LIGHT_CTR = 1,
+    NETWORK = 2,
+    LIGHT_TEMP = 3
+}
+
+enum Network {
+    SET_EXT_NETWORK = 0,
+    TOGGLE_WIFI = 1
+}
+
+function redirectAction(channel:string, ioMsg:string, mqttMsg:string) {
+  io.emit(channel, ioMsg);
+  mqttClient.publish(channel, mqttMsg);
+}
+
 router.get('/', async (ctx, next) => {
   await next;
 });
 
-router.post('/api/rc', async (ctx, next) => {
+router.post('/api/v1', async (ctx, next) => {
   await next;
 
   let heliumId = ctx.request.body.id;
-  let code = ctx.request.body.code;
-  switch (code) {
-    case 1:
-      // ctr light
-      let subId = ctx.request.body.ledId;
+  let action = ctx.request.body.action;
+  let option = ctx.request.body.option;
+  switch (action) {
+    case Action.LIGHT_CTR:
+      let subId = option;
       let switchValue = (ctx.request.body.isOn == true ? 1 : 0);
       let switchWord = (ctx.request.body.isOn == true ? "on" : "off");
-      io.emit('action', `Turn ${switchWord} led ${subId}`);
-      mqttClient.publish('action', `1:${subId}:${switchValue}`);
+      redirectAction('action', `Turn ${switchWord} led ${subId}`, `1:${subId}:${switchValue}`);
       break;
-    case 2:
-      // set wifi
-      console.log("wifi untilities");
-      let wifiOption = ctx.request.body.wifioption;
-      if (wifiOption===0) {
-        // set extended network ssid and psd
+    case Action.NETWORK:
+      let wifiOption = option;
+      if (wifiOption===Network.SET_EXT_NETWORK) {
         let essid = ctx.request.body.essid;
         let epsd = ctx.request.body.epsd;
-        io.emit('action', 'Set new extended network');
-        mqttClient.publish('action', `2:${wifiOption}:${essid}:${epsd}`);
+        redirectAction('action', `Set new extended network`, `2:${wifiOption}:${essid}:${epsd}`);
       }
-      if (wifiOption===1) {
-        let eSwitchValue = (ctx.request.body.isExtenderOn == true ? 1 : 0);
-        let eSwitchWord = (ctx.request.body.isExtenderOn == true ? "on" : "off");
-        io.emit('action', `Turn extended network ${eSwitchWord}`);
-        mqttClient.publish('action', `2:${wifiOption}:${eSwitchValue}`);
+      if (wifiOption===Network.TOGGLE_WIFI) {
+        let eSwitchValue = (ctx.request.body.isOn == true ? 1 : 0);
+        let eSwitchWord = (ctx.request.body.isOn == true ? "on" : "off");
+        redirectAction('action', `Turn extended network ${eSwitchWord}`, `2:${wifiOption}:${eSwitchValue}`);
       }
-      // let ssid = ctx.request.body.ssid;
-      // let psd = ctx.request.body.psd;
       break;
-    case 3:
-      // color temp
-      console.log("code 3");
+    case Action.LIGHT_TEMP:
+      console.log("LIGHT_TEMP");
       break;
     default:
-      console.log("undefined action, "+code);
+      console.log("undefined action, "+action);
   }
 
   ctx.body = '(Recieved Post)';
