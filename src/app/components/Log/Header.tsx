@@ -15,8 +15,8 @@ class Header extends React.Component<HeaderProps, void> {
 
   render() {
     return (
-      <header className="header">
-          <h1>Helium Log</h1>
+      <header className="log-header">
+          <h1>Log</h1>
           <TodoTextInput
             newTodo
             onSave={this.handleSave.bind(this)}

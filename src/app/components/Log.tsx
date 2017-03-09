@@ -25,15 +25,18 @@ class Log extends React.Component<AppProps, any> {
     const { todos, dispatch } = this.props;
 
     return (
-      <div className="todoapp">
-        <Header addTodo={(text: string) => dispatch(addTodo(text))} />
-        <MainSection
-            todos={todos}
-            editTodo={(t,s) => dispatch(editTodo(t, s))}
-            deleteTodo={(t: Todo) => dispatch(deleteTodo(t))}
-            completeTodo={(t: Todo) => dispatch(completeTodo(t))}
-            clearCompleted={() => dispatch(clearCompleted())}
-            completeAll={() => dispatch(completeAll())}/>
+      <div>
+        <div className="log-placeholder"/>
+        <div className="todoapp">
+          <Header addTodo={(text: string) => dispatch(addTodo(text))} />
+          <MainSection
+              todos={todos}
+              editTodo={(t,s) => dispatch(editTodo(t, s))}
+              deleteTodo={(t: Todo) => dispatch(deleteTodo(t))}
+              completeTodo={(t: Todo) => dispatch(completeTodo(t))}
+              clearCompleted={() => dispatch(clearCompleted())}
+              completeAll={() => dispatch(completeAll())}/>
+        </div>
       </div>
     )
   }
