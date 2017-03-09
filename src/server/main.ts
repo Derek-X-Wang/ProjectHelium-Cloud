@@ -11,7 +11,7 @@ import * as url from 'url';
 import router from './routes';
 
 const app = new Koa();
-const port = process.env.PORT || 5050;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser())
    .use(serve("."))

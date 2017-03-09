@@ -1,48 +1,50 @@
-'use strict';
-
 var path = require('path');
 var webpack = require('webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    devtool: 'source-map',
+    devtool: 'eval',
     entry: [
       'webpack-dev-server/client?http://localhost:3000',
       'webpack/hot/only-dev-server',
-      path.join(__dirname, '/src/app/index')
+      path.join(__dirname, '/src/app/index'),
     ],
     output: {
         path: path.join(__dirname, 'dist/app/static/'),
         filename: 'bundle.js',
-        publicPath: 'http://localhost:3000/static/'
+        publicPath: '/dist/app/static/',
     },
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
+        new webpack.NamedModulesPlugin(),
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('development')
         }),
         new CopyWebpackPlugin([
-            { from: './src/app/css/main.css', to: './css/' },
-            { from: './src/app/css/todos.css', to: './css/' }
+            { from: './src/app/css', to: './css/' },
+            { from: './src/app/fonts', to: './fonts/' }
           ])
     ],
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
     },
     module: {
-      loaders: [
-          // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-          { test: /\.tsx?$/,
-            loaders: ['react-hot','awesome-typescript']
-          }
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loaders: ['react-hot-loader', 'awesome-typescript-loader'],
+        },
+        {
+          test: /\.css$/,
+          use: [ 'style-loader', 'css-loader' ]
+        },
       ],
-
-      preLoaders: [
-          // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-          { test: /\.js$/, loader: "source-map-loader" }
-      ]
+    },
+    devServer: {
+      host: 'localhost',
+      port: 3000,
+      historyApiFallback: true,
+      hot: true,
     },
 };

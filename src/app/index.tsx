@@ -2,21 +2,23 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Store, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import App from './containers/App';
+import Root from './Root';
 import rootReducer from './reducers';
-import { Todo } from './model';
 import socket from './socket';
 
 const initialState = {};
 
 const store = createStore(rootReducer, initialState);
 
-socket(store);
+//socket(store);
 
-let rootElement = document.getElementById('app')
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  rootElement
-)
+let renderView = (Component:any) => {
+  render(
+    <Provider store={store}>
+      <Component />
+    </Provider>,
+    document.getElementById('root')
+  )
+}
+
+renderView(Root);

@@ -54,7 +54,6 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
         onBlur={this.handleBlur.bind(this)}
         onChange={this.handleChange.bind(this)}
         onKeyDown={this.handleSubmit.bind(this)}
-        disabled
         />
     );
   }

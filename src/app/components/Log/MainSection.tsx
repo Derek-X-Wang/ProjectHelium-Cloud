@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { Todo } from '../model';
+import { Todo } from '../../model';
 import TodoItem from './TodoItem';
 import Footer from './Footer';
 import {
   SHOW_ALL,
   SHOW_COMPLETED,
   SHOW_ACTIVE
-} from '../constants/TodoFilters';
+} from '../../constants/TodoFilters';
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,

@@ -9,8 +9,8 @@ import {
   completeTodo,
   deleteTodo
 } from '../actions';
-import Header from '../components/Header';
-import MainSection from '../components/MainSection';
+import Header from './Log/Header';
+import MainSection from './Log/MainSection';
 import { IState, Todo } from '../model';
 
 interface AppProps {
@@ -18,7 +18,7 @@ interface AppProps {
   dispatch: Dispatch<any>;
 }
 
-class App extends React.Component<AppProps, any> {
+class Log extends React.Component<AppProps, any> {
 
   render() {
     // Injected by connect() call:
@@ -45,4 +45,4 @@ const mapStateToProps = (state:any) => {
   }
 };
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(Log);
