@@ -10,7 +10,7 @@ const initialState = {};
 
 const store = createStore(rootReducer, initialState);
 
-//socket(store);
+socket(store);
 
 let renderView = (Component:any) => {
   render(
